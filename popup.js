@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('summarizeBtn').onclick = () => getTranscriptAndSend('summarize');
-  document.getElementById('flashcardsBtn').onclick = () => getTranscriptAndSend('flashcards');
+  document.getElementById('TestBtn').onclick = () => getTranscriptAndSend('questions');
   document.getElementById('askBtn').onclick = () => {
     const question = questionInput.value;
     if (!question) return;

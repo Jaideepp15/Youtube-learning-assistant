@@ -36,20 +36,20 @@ async function callGroqAPI(prompt, systemMessage) {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "summarize") {
-    const prompt = `Summarize the following YouTube transcript:\n\n${request.transcript}`;
-    callGroqAPI(prompt, "You are an expert educator summarizing lectures.").then(sendResponse);
+    const prompt = `Summarize the YouTube video based on its transcript:\n\n${request.transcript}`;
+    callGroqAPI(prompt, "You are an expert educator summarizing YouTube videos.").then(sendResponse);
     return true;
   }
 
-  if (request.action === "flashcards") {
-    const prompt = `Generate 5 flashcards (Q&A format) based on this transcript:\n\n${request.transcript}`;
-    callGroqAPI(prompt, "You are a helpful tutor generating flashcards.").then(sendResponse);
+  if (request.action === "questions") {
+    const prompt = `Generate 5 questions to test a user (Q&A format) based on this transcript:\n\n${request.transcript}`;
+    callGroqAPI(prompt, "You are a helpful tutor generating questions to help users asses themselves.").then(sendResponse);
     return true;
   }
 
   if (request.action === "ask_question") {
-    const prompt = `Based on this transcript:\n\n${request.transcript}\n\nAnswer the following question:\n${request.question}`;
-    callGroqAPI(prompt, "You are an expert answering questions from lecture transcripts.").then(sendResponse);
+    const prompt = `Based on this video transcript:\n\n${request.transcript}\n\nAnswer the following question:\n${request.question}`;
+    callGroqAPI(prompt, "You are an expert answering questions from video transcripts.").then(sendResponse);
     return true;
   }
 });

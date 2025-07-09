@@ -1,4 +1,4 @@
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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";
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 const MODEL = "deepseek-r1-distill-llama-70b";
 
@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === "questions") {
-    const prompt = `Generate 5 questions to test a user (Q&A format) based on this transcript:\n\n${request.transcript}`;
+    const prompt = `Generate 5 questions to test a user (Q&A format) based on this transcript:\n\n${request.transcript}. [MANDATORY] - You should only generate the questions and answers and they should be labelled like **Q1:** and **A1:**.`;
     callGroqAPI(prompt, "You are a helpful tutor generating questions to help users asses themselves.").then(sendResponse);
     return true;
   }

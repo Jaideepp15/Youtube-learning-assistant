@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 /* Reset and base styles */
 * {
   margin: 0;
@@ -340,12 +342,20 @@ h2 {
 }
 
 .output-actions {
-  position: absolute;
-  top: 12px;
-  right: 12px;
   display: flex;
   gap: 8px;
-  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: medium;
+}
+
+.results-header h2 {
+  margin: 0;
 }
 
 .copy-btn,
@@ -353,11 +363,19 @@ h2 {
   background: rgba(0, 0, 0, 0.1);
   border: none;
   border-radius: 6px;
-  padding: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 12px;
+  font-size: 10px;
   opacity: 0.7;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+}
+
+.copy-btn span,
+.clear-btn span {
+  font-size: 16px;
 }
 
 .copy-btn:hover,
@@ -419,4 +437,178 @@ h2 {
   .output-section {
     padding: 20px;
   }
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.card:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.card-question {
+  padding: 20px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+  position: relative;
+}
+
+.card-question::after {
+  content: '+';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  font-weight: 400;
+  color: #6b7280;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover .card-question::after {
+  color: #374151;
+}
+
+.card-answer {
+  max-height: 500px;
+  opacity: 1;
+  padding: 20px 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4b5563;
+  background: #f9fafb;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.card-answer.hidden {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 24px;
+}
+
+/* Rotate the plus icon when answer is visible */
+.card:not(:has(.card-answer.hidden)) .card-question::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* Alternative for browsers that don't support :has() */
+.card.expanded .card-question::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .card-container {
+    gap: 12px;
+    margin-top: 12px;
+  }
+  
+  .card-question {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+  
+  .card-question::after {
+    right: 20px;
+    font-size: 18px;
+  }
+  
+  .card-answer {
+    padding: 16px 20px;
+    font-size: 14px;
+  }
+  
+  .card-answer.hidden {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-question {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+  
+  .card-question::after {
+    right: 16px;
+  }
+  
+  .card-answer {
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+  
+  .card-answer.hidden {
+    padding: 0 16px;
+  }
+}
+
+/* Focus styles for accessibility */
+.card:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* ========== Light Theme Flashcards ========== */
+.light-theme .card {
+  background: linear-gradient(135deg, #7c3aed 0%, #ddd6fe 100%);
+  border: 1px solid #a78bfa;
+  box-shadow: 0 4px 8px rgba(124, 58, 237, 0.15);
+}
+
+.light-theme .card-question {
+  background: rgba(245, 243, 255, 0.6);
+  color: #4c1d95;
+  border-bottom: 1px solid #c4b5fd;
+}
+
+.light-theme .card-answer {
+  background: rgba(237, 233, 254, 0.4);
+  color: #5b21b6;
+}
+
+/* ========== Dark Theme Flashcards ========== */
+.dark-theme .card {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  border: 1px solid #8b5cf6;
+  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+}
+
+.dark-theme .card-question {
+  background: rgba(30, 27, 75, 0.2);
+  color: #e0e7ff;
+  border-bottom: 1px solid #8b5cf6;
+}
+
+.dark-theme .card-answer {
+  background: rgba(49, 46, 129, 0.1);
+  color: #c7d2fe;
 }

@@ -49,10 +49,9 @@
       </div>
     </div>
 
-    <!-- Output Section -->
     <div class="output-section">
-      <h2>Results</h2>
-      <div class="output-wrapper">
+      <div class="results-header">
+        <h2>Results</h2>
         <div class="output-actions">
           <button class="copy-btn" id="copyBtn" title="Copy to clipboard">
             <span>📋</span>
@@ -61,9 +60,14 @@
             <span>🗑️</span>
           </button>
         </div>
-        <textarea id="outputBox" rows="12" readonly placeholder="Results will appear here..."></textarea>
+      </div>
+
+      <div class="output-wrapper">
+        <textarea id="outputBox" rows="12" readonly placeholder="Your results will appear here..."></textarea>
+        <div id="outputCards" class="card-container" style="display: none;"></div>
       </div>
     </div>
+
 
 
   <script src="popup.js"></script>

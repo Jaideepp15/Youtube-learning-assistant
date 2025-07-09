@@ -5,7 +5,6 @@ function extractTranscriptFromDOM() {
   console.log(`[Transcript Debug] Found ${segments.length} segments`);
 
   if (segments.length === 0) {
-    console.warn('[Transcript] No transcript segments found in DOM - transcript panel may not be open');
     return null;
   }
 
@@ -28,7 +27,6 @@ function getVideoIdFromUrl() {
     const url = new URL(window.location.href);
     return url.searchParams.get("v") || url.pathname.split('/').pop();
   } catch (e) {
-    console.warn("Failed to extract video ID:", e);
     return null;
   }
 }
@@ -55,7 +53,6 @@ async function openTranscriptPanel() {
           attempts++;
           setTimeout(checkForTranscript, 200);
         } else {
-          console.warn('[Transcript] ❌ Timeout waiting for transcript to load');
           resolve(false);
         }
       };
@@ -83,14 +80,12 @@ async function fetchTranscriptViaAPI(videoId) {
 
     const segments = data?.items?.[0]?.transcript || data?.video?.transcript?.segments;
     if (!segments || !Array.isArray(segments)) {
-      console.warn('[Transcript] No transcript data found in API response');
       return null;
     }
 
     const transcript = segments.map(seg => seg.text || seg.snippet?.text || '').join(' ').replace(/\n/g, ' ').trim();
     return transcript || null;
   } catch (err) {
-    console.error('[Transcript API Error]', err);
     return null;
   }
 }
@@ -112,7 +107,6 @@ async function fetchTranscriptViaAlternativeAPIs(videoId) {
         if (data.items?.[0]?.transcript) return data.items[0].transcript;
       }
     } catch (err) {
-      console.warn(`Failed to fetch from ${endpoint}:`, err);
       continue;
     }
   }
@@ -124,7 +118,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'get_transcript') {
     const videoId = getVideoIdFromUrl();
     if (!videoId) {
-      console.error('[Transcript] No video ID found');
       sendResponse({ transcript: null, error: 'No video ID found' });
       return;
     }
@@ -160,14 +153,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           console.log(`[Transcript] ✅ Success via ${method}`);
           sendResponse({ transcript, method });
         } else {
-          console.warn('[Transcript] ❌ All methods failed');
           sendResponse({ 
             transcript: null, 
             error: 'Could not fetch transcript via API or DOM extraction' 
           });
         }
       } catch (error) {
-        console.error('[Transcript] Unexpected error:', error);
         sendResponse({ 
           transcript: null, 
           error: error.message 

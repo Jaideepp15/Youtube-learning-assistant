@@ -1,4 +1,4 @@
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "Your Groq api key";
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 const MODEL = "deepseek-r1-distill-llama-70b";
 

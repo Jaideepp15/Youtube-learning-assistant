@@ -3,6 +3,17 @@ const outputCards = document.getElementById('outputCards'); // Ensure this <div>
 const copyBtn = document.getElementById('copyBtn');
 const clearBtn = document.getElementById('clearBtn');
 
+// Embed the given text and return a float32 array
+async function getEmbedding(text) {
+  const res = await fetch("http://localhost:5005/embed", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text }),
+  });
+  const data = await res.json();
+  return data.embedding;
+}
+
 function showTextarea(content) {
   outputBox.style.display = 'block';
   outputCards.style.display = 'none';
@@ -16,7 +27,6 @@ function showCardsFromText(text) {
   outputCards.innerHTML = ''; // Clear any previous cards
 
   const qaPairs = text.trim().split(/\*\*Q\d+:|\n(?=\*\*Q\d+:)/).filter(p => p.trim());
-  console.log(qaPairs);
   qaPairs.forEach((block, index) => {
     const match = block.match(/\*\*\s*(.*?)\n\*\*A\d+:?\*\*\s*(.*)/);
     if (match) {
